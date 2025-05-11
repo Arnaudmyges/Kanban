@@ -1,0 +1,121 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f0f2f5;
+  color: #343a40;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#taskName {
+  width: 60%;
+  max-width: 400px;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+button[onclick="addTask()"] {
+  padding: 0.5rem 1.2rem;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.filters label {
+  margin-right: 0.25rem;
+  font-weight: 500;
+}
+.filters select {
+  min-width: 120px;
+}
+
+.board {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.column {
+  flex: 1;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.3s;
+}
+.column:hover {
+  background: #f8f9fa;
+}
+.column h3 {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #495057;
+}
+
+.task {
+  position: relative;
+  background: #ffffff;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-left: 5px solid #6c757d;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.badge {
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+.task.low .badge { background-color: #198754 !important; }
+.task.medium .badge { background-color: #fd7e14 !important; }
+.task.high .badge { background-color: #dc3545 !important; }
+
+.task .btn-danger {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.task .btn-danger:hover {
+  opacity: 1;
+}
+.task .btn-light {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.task .btn-light:hover {
+  opacity: 1;
+}
+
+#trash {
+  margin-top: 1rem;
+}
+#trash .task {
+  background: #e9ecef;
+}
+
+.modal-content {
+  border-radius: 0.5rem;
+}
+.modal-header {
+  border-bottom: none;
+}
+.modal-footer {
+  border-top: none;
+}
