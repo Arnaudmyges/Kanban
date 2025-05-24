@@ -22,16 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const name = document.getElementById('taskName').value.trim();
     if (!name) return alert("Veuillez entrer un nom de tâche.");
 
-    const newTask = {
+    tasks.push({
       id: Date.now(),
       name,
-      priority: "medium",
+      priority: "medium", 
       content: "",
       status: "TO_DO",
       deleted: false
-    };
+    });
 
-    tasks.push(newTask);
     saveTasks();
     renderTasks();
     document.getElementById('taskName').value = '';
@@ -50,8 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(t => priorityFilter === "all" || t.priority === priorityFilter)
       .forEach(task => {
         const div = document.createElement('div');
-        div.className = `task p-2 mb-2 border rounded bg-light`;
+        div.className = `task p-2 mb-2 border-start border-5 border-${getPriorityColor(task.priority)} bg-light`;
         div.draggable = true;
+
         const priorityLabel = {
           low:    '✅ LOW',
           medium: '⚠️ MEDIUM',
@@ -79,9 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         div.addEventListener('dblclick', () => openEditModal(task));
 
-        document
-          .querySelector(`.column[data-status="${task.status}"]`)
-          .appendChild(div);
+        const targetCol = document.querySelector(`.column[data-status="${task.status}"]`);
+        if (targetCol) {
+          targetCol.appendChild(div);
+        }
       });
 
     renderTrash();
@@ -90,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderTrash = () => {
     const trash = document.getElementById('trash');
     trash.innerHTML = '';
-    const deletedTasks = tasks.filter(t => t.deleted);
-    if (deletedTasks.length === 0) {
+    const deleted = tasks.filter(t => t.deleted);
+    if (deleted.length === 0) {
       trash.innerText = "La corbeille est vide.";
       return;
     }
-    deletedTasks.forEach(task => {
+    deleted.forEach(task => {
       const div = document.createElement('div');
       div.className = `task p-2 mb-2 border rounded bg-secondary text-white`;
       div.textContent = task.name;
@@ -118,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentEditId = task.id;
     document.getElementById('editName').value     = task.name;
     document.getElementById('editPriority').value = task.priority;
+    document.getElementById('editStatus').value   = task.status;
     document.getElementById('editContent').value  = task.content || "";
     bsEditModal.show();
   };
@@ -127,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!task) return;
     task.name     = document.getElementById('editName').value.trim()     || task.name;
     task.priority = document.getElementById('editPriority').value       || task.priority;
+    task.status   = document.getElementById('editStatus').value         || task.status;
     task.content  = document.getElementById('editContent').value.trim() || task.content;
     saveTasks();
     renderTasks();
